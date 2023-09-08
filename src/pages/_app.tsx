@@ -8,6 +8,8 @@ import theme from '@/theme/themeConfig';
 
 import { useApollo } from '@/lib/apollo-client';
 
+import '@/styles/main.scss';
+
 function App({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps.initialApolloState);
 

@@ -8,6 +8,8 @@ import { Pagination, List, Image, Spin } from 'antd';
 
 import { initializeApollo, useApollo } from '@/lib/apollo-client';
 
+import Layout from '@/components/Layout/Layout';
+
 import {
   GetCharactersQuery,
   GetCharactersDocument,
@@ -36,7 +38,7 @@ function Characters({
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div>
+    <Layout title="Characters">
       <List
         itemLayout="horizontal"
         dataSource={data?.characters?.results || []}
@@ -58,13 +60,10 @@ function Characters({
         total={data?.characters?.info?.count || 0}
         onChange={(page) => router.push(`characters/?page=${page}`)}
       />
-    </div>
+    </Layout>
   );
 }
 
-// Fetches data on the server-side for each request. The data fetched will be
-// injected into the page as props.
-// is a special function that runs on the server for each request.
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo();
 
@@ -82,8 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      initialApolloState: apolloClient.cache.extract(), // Pass Apollo state as a prop
-      page,
+      initialApolloState: apolloClient.cache.extract(),
     },
   };
 };
